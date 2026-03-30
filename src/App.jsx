@@ -7,6 +7,7 @@ import PriorityScreen from './screens/PriorityScreen';
 import NFCScreen from './screens/NFCScreen';
 import WalletScreen from './screens/WalletScreen';
 import RewardScreen from './screens/RewardScreen';
+import CardDetailScreen from './screens/CardDetailScreen';
 
 const TAB_SCREENS = new Set(['home', 'wallet-tab', 'settings-tab']);
 const STEP_MAP = { selection: 1, priority: 2, nfc: 3, wallet: 4, reward: 5 };
@@ -71,7 +72,7 @@ function PhoneFrame({ children, screen }) {
       {/* Screen bezel */}
       <div style={{
         width: '100%', height: '100%',
-        borderRadius: '47px',
+        borderRadius: '45px',
         overflow: 'hidden',
         background: '#F2F2F7',
         position: 'relative',
@@ -95,12 +96,20 @@ function PhoneFrame({ children, screen }) {
 }
 
 export default function App() {
-  const [screen, setScreen] = useState('home');
+  const [screen, setScreen] = useState('selection');
   const [selectedCards, setSelectedCards] = useState(new Set());
   const [priority, setPriority] = useState(null);
+  const [detailCard, setDetailCard] = useState(null);
+  const [prevTab, setPrevTab] = useState('wallet-tab');
 
   function handleTabChange(tab) {
     setScreen(tab);
+  }
+
+  function handleCardTap(card) {
+    setDetailCard(card);
+    setPrevTab(screen);
+    setScreen('card-detail');
   }
 
   return (
@@ -113,18 +122,29 @@ export default function App() {
             activeTab="home"
             onTabChange={handleTabChange}
             onScan={() => setScreen('nfc')}
+            selectedCards={selectedCards}
           />
         )}
         {screen === 'wallet-tab' && (
           <WalletTabScreen
             activeTab="wallet-tab"
             onTabChange={handleTabChange}
+            selectedCards={selectedCards}
+            onCardTap={handleCardTap}
           />
         )}
         {screen === 'settings-tab' && (
           <SettingsTabScreen
             activeTab="settings-tab"
             onTabChange={handleTabChange}
+          />
+        )}
+
+        {/* ── Card detail ── */}
+        {screen === 'card-detail' && (
+          <CardDetailScreen
+            card={detailCard}
+            onBack={() => setScreen(prevTab)}
           />
         )}
 
@@ -142,7 +162,7 @@ export default function App() {
             onBack={() => setScreen('selection')}
             onContinue={(p) => {
               setPriority(p);
-              setScreen('nfc');
+              setScreen('home');
             }}
           />
         )}
@@ -153,6 +173,7 @@ export default function App() {
           <WalletScreen
             onContinue={() => setScreen('reward')}
             onBack={() => setScreen('nfc')}
+            selectedCards={selectedCards}
           />
         )}
         {screen === 'reward' && (

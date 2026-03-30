@@ -39,7 +39,7 @@ export default function BottomTabBar({ active, onChange }) {
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
-      borderTop: '0.5px solid rgba(0,0,0,0.1)',
+      boxShadow: '0 -1px 0 rgba(0,0,0,0.06), 0 -4px 16px rgba(0,0,0,0.04)',
       background: 'rgba(255,255,255,0.97)',
       padding: '8px 0 22px',
     }}>
