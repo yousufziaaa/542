@@ -1,16 +1,80 @@
-# React + Vite
+# CardSmart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React mobile UI prototype for CardSmart — an app that helps users maximize credit card rewards by recommending the best card to use at any merchant via NFC scan.
 
-Currently, two official plugins are available:
+## What it is
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This is a **pixel-perfect mobile UI mockup** rendered in a browser inside a simulated iPhone 15 Pro frame (393×852px). It is not a production app — there is no backend, no real NFC, and no real auth. It exists to demonstrate the full user flow and visual design.
 
-## React Compiler
+## User flow
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app has two modes:
 
-## Expanding the ESLint configuration
+**Tab navigation** (persistent):
+- **Home** — greeting, savings summary, recent activity, and the "Scan Merchant" CTA
+- **Wallet** — view all saved cards
+- **Settings** — app settings
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Scan flow** (5-step, tracked with progress dots):
+1. **Card Selection** — pick which cards you carry
+2. **Priority** — set your reward preference (points, cashback, travel, etc.)
+3. **NFC Scan** — hold phone to terminal (simulated)
+4. **Wallet** — confirm the recommended card
+5. **Reward** — see points/cashback earned
+
+## Stack
+
+| Tool | Version |
+|---|---|
+| React | 19 |
+| Vite | 8 |
+| Tailwind CSS | 3 |
+| ESLint | 9 |
+
+No routing library — screen state is managed with a single `useState` in `App.jsx`.
+
+## Project structure
+
+```
+src/
+  App.jsx              # Root: PhoneFrame shell + screen router
+  screens/
+    HomeScreen.jsx
+    WalletTabScreen.jsx
+    SettingsTabScreen.jsx
+    CardSelectionScreen.jsx
+    PriorityScreen.jsx
+    NFCScreen.jsx
+    WalletScreen.jsx
+    RewardScreen.jsx
+  components/
+    BottomTabBar.jsx
+    CardTile.jsx
+    MiniCard.jsx
+    NetworkBadge.jsx
+    StatusBar.jsx
+  data/
+    cards.js           # Static card definitions (10 Canadian credit cards)
+```
+
+## Supported cards
+
+10 Canadian credit cards are defined in `src/data/cards.js`:
+Amex Cobalt, Amex Gold, Aeroplan Visa, Scotia Gold Amex, BMO Cashback MC, CIBC Dividend Visa, Tangerine MC, PC Optimum MC, Rogers WE MC, TD Aeroplan Visa.
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
+Then open `http://localhost:5173`. The app renders centered in the browser — resize your window if the phone frame is cut off.
+
+## Other commands
+
+```bash
+npm run build    # Production build → dist/
+npm run preview  # Serve the production build locally
+npm run lint     # ESLint
+```
