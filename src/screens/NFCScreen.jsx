@@ -201,71 +201,68 @@ export default function NFCScreen({ onContinue }) {
 
       {phase === 'error' && (
         <>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.52)', zIndex: 30 }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 30 }} />
           <div style={{
             position: 'absolute', left: 0, right: 0, bottom: 0,
-            background: 'white', borderRadius: '22px 22px 0 0',
+            background: '#141414', borderRadius: '28px 28px 0 0',
             animation: 'sheetSlideUp 0.46s cubic-bezier(0.32,0.72,0,1) forwards',
-            boxShadow: '0 -6px 40px rgba(0,0,0,0.45)', zIndex: 40,
+            boxShadow: '0 -6px 40px rgba(0,0,0,0.6)',
+            border: '1px solid rgba(255,255,255,0.08)', borderBottom: 'none',
+            zIndex: 40,
           }}>
-            {/* Handle */}
-            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px', paddingBottom: '4px' }}>
-              <div style={{ width: '32px', height: '4px', borderRadius: '2px', background: '#D1D1D6' }} />
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '12px', paddingBottom: '4px' }}>
+              <div style={{ width: '32px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.15)' }} />
             </div>
 
             <div style={{ padding: '20px 24px 40px', textAlign: 'center' }}>
-              {/* Amber warning icon */}
               <div style={{
                 width: '68px', height: '68px', borderRadius: '50%',
-                background: 'rgba(255,149,0,0.12)',
-                border: '1px solid rgba(255,149,0,0.18)',
+                background: 'rgba(255,149,0,0.1)',
+                border: '1px solid rgba(255,149,0,0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 margin: '0 auto 18px',
               }}>
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
                   <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-                    fill="rgba(255,149,0,0.18)" stroke="#FF9500" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                    fill="rgba(255,149,0,0.15)" stroke="#FF9500" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M12 9v4" stroke="#FF9500" strokeWidth="2" strokeLinecap="round"/>
                   <circle cx="12" cy="17" r="0.8" fill="#FF9500" stroke="#FF9500" strokeWidth="0.5"/>
                 </svg>
               </div>
 
               <h2 style={{
-                fontSize: '20px', fontWeight: '700', color: '#1C1C1E',
-                margin: '0 0 8px', letterSpacing: '-0.3px',
+                fontSize: '20px', fontWeight: '800', color: '#FFFFFF',
+                margin: '0 0 8px', letterSpacing: '-0.4px',
               }}>
                 Merchant Not Detected
               </h2>
               <p style={{
-                fontSize: '14px', color: '#8E8E93',
+                fontSize: '14px', color: 'rgba(255,255,255,0.4)',
                 margin: '0 0 28px', lineHeight: 1.55,
               }}>
                 We couldn&apos;t identify this merchant automatically
               </p>
 
-              {/* Primary blue button */}
               <button
                 onClick={onContinue}
                 style={{
-                  width: '100%', padding: '15px', borderRadius: '14px',
+                  width: '100%', padding: '16px', borderRadius: '100px',
                   border: 'none', fontFamily: 'inherit',
-                  background: 'linear-gradient(135deg, #007AFF 0%, #0060CC 100%)',
-                  color: 'white', fontSize: '16px', fontWeight: '600',
-                  cursor: 'pointer', marginBottom: '4px',
-                  boxShadow: '0 4px 18px rgba(0,122,255,0.38)',
+                  background: 'rgba(255,255,255,0.92)',
+                  color: '#080808', fontSize: '16px', fontWeight: '700',
+                  cursor: 'pointer', marginBottom: '10px',
                 }}
               >
                 Enter Merchant Manually
               </button>
 
-              {/* Secondary text link */}
               <button
                 onClick={onContinue}
                 style={{
-                  background: 'none', border: 'none', fontFamily: 'inherit',
-                  color: '#8E8E93', fontSize: '15px', fontWeight: '500',
-                  cursor: 'pointer', padding: '12px 8px',
-                  width: '100%',
+                  background: 'none', border: '1px solid rgba(255,255,255,0.1)', fontFamily: 'inherit',
+                  color: 'rgba(255,255,255,0.45)', fontSize: '15px', fontWeight: '500',
+                  cursor: 'pointer', padding: '14px 8px',
+                  width: '100%', borderRadius: '100px',
                 }}
               >
                 Skip and choose a card
@@ -277,24 +274,26 @@ export default function NFCScreen({ onContinue }) {
 
       {phase === 'found' && (
         <>
-          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.42)', zIndex: 30 }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 30 }} />
           <div style={{
             position: 'absolute', left: 0, right: 0, bottom: 0,
-            background: 'white', borderRadius: '22px 22px 0 0',
+            background: '#141414', borderRadius: '28px 28px 0 0',
             animation: 'sheetSlideUp 0.46s cubic-bezier(0.32,0.72,0,1) forwards',
-            boxShadow: '0 -6px 40px rgba(0,0,0,0.45)', zIndex: 40,
+            boxShadow: '0 -6px 40px rgba(0,0,0,0.6)',
+            border: '1px solid rgba(255,255,255,0.08)', borderBottom: 'none',
+            zIndex: 40,
           }}>
-            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '10px', paddingBottom: '2px' }}>
-              <div style={{ width: '32px', height: '4px', borderRadius: '2px', background: '#D1D1D6' }} />
+            <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '12px', paddingBottom: '2px' }}>
+              <div style={{ width: '32px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.15)' }} />
             </div>
             <div style={{ padding: '14px 20px 32px', animation: 'sheetContentFade 0.36s ease 0.1s both' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '7px', marginBottom: '14px' }}>
                 <div style={{
-                  width: '7px', height: '7px', borderRadius: '50%', background: '#34C759',
-                  boxShadow: '0 0 0 3px rgba(52,199,89,0.18)',
+                  width: '7px', height: '7px', borderRadius: '50%', background: '#34D058',
+                  boxShadow: '0 0 0 3px rgba(52,208,88,0.18)',
                   animation: 'glowPulse 1.8s ease-in-out infinite',
                 }} />
-                <span style={{ fontSize: '11px', fontWeight: '700', color: '#8E8E93', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                   Best Card for This Merchant
                 </span>
               </div>
@@ -304,14 +303,14 @@ export default function NFCScreen({ onContinue }) {
                   <SheetCard />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: '20px', fontWeight: '700', color: '#1C1C1E', margin: 0, lineHeight: 1.15, letterSpacing: '-0.3px' }}>
+                  <p style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0, lineHeight: 1.15, letterSpacing: '-0.4px' }}>
                     {CARD.name}
                   </p>
-                  <p style={{ fontSize: '12px', color: '#8E8E93', margin: '2px 0 0' }}>{CARD.bank}</p>
+                  <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', margin: '2px 0 0' }}>{CARD.bank}</p>
                   <div style={{
                     display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '7px',
                     background: 'linear-gradient(135deg, #0E2A6E, #1B5FCC)',
-                    borderRadius: '16px', padding: '4px 10px',
+                    borderRadius: '100px', padding: '4px 10px',
                   }}>
                     <span style={{ fontSize: '13px', fontWeight: '800', color: 'white' }}>{CARD.reward}</span>
                     <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.75)', fontWeight: '500' }}>{CARD.category}</span>
@@ -319,37 +318,38 @@ export default function NFCScreen({ onContinue }) {
                 </div>
               </div>
 
-              <div style={{ height: '0.5px', background: '#E5E5EA', marginBottom: '14px' }} />
+              <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.06)', marginBottom: '14px' }} />
 
               <div style={{
-                background: '#F2F2F7', borderRadius: '10px',
+                background: 'rgba(255,255,255,0.05)', borderRadius: '14px',
                 padding: '12px 14px', display: 'flex', alignItems: 'center',
                 gap: '10px', marginBottom: '18px',
+                border: '1px solid rgba(255,255,255,0.07)',
               }}>
                 <div style={{
                   width: '30px', height: '30px', borderRadius: '8px', flexShrink: 0,
-                  background: 'linear-gradient(135deg, #34C759, #248A3D)',
+                  background: 'rgba(52,208,88,0.15)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  boxShadow: '0 2px 8px rgba(52,199,89,0.3)',
                 }}>
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M8 13V3M3 8l5-5 5 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M8 13V3M3 8l5-5 5 5" stroke="#34D058" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <p style={{ fontSize: '13px', color: '#3C3C43', margin: 0, lineHeight: 1.45 }}>
-                  Earns <strong style={{ color: '#1C1C1E' }}>5×</strong> points here —{' '}
-                  <strong style={{ color: '#1C1C1E' }}>5× better</strong> than your next best card
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', margin: 0, lineHeight: 1.45 }}>
+                  Earns <strong style={{ color: '#FFFFFF' }}>5×</strong> points here —{' '}
+                  <strong style={{ color: '#FFFFFF' }}>5× better</strong> than your next best card
                 </p>
               </div>
 
               <button
                 onClick={onContinue}
+                className="btn-press"
                 style={{
-                  width: '100%', padding: '14px', borderRadius: '12px',
+                  width: '100%', padding: '16px', borderRadius: '100px',
                   border: 'none', fontFamily: 'inherit',
-                  fontSize: '15px', fontWeight: '600', cursor: 'pointer',
-                  background: 'linear-gradient(135deg, #007AFF 0%, #0060CC 100%)',
-                  color: 'white', boxShadow: '0 4px 18px rgba(0,122,255,0.38)',
+                  fontSize: '16px', fontWeight: '700', cursor: 'pointer',
+                  background: 'rgba(255,255,255,0.92)',
+                  color: '#080808',
                 }}
               >
                 Continue

@@ -8,8 +8,9 @@ import NFCScreen from './screens/NFCScreen';
 import WalletScreen from './screens/WalletScreen';
 import RewardScreen from './screens/RewardScreen';
 import CardDetailScreen from './screens/CardDetailScreen';
+import SavingsScreen from './screens/SavingsScreen';
 
-const TAB_SCREENS = new Set(['home', 'wallet-tab', 'settings-tab']);
+const TAB_SCREENS = new Set(['home', 'wallet-tab', 'savings-tab', 'settings-tab']);
 const STEP_MAP = { selection: 1, priority: 2, nfc: 3, wallet: 4, reward: 5 };
 
 function StepDots({ step, dark }) {
@@ -74,7 +75,7 @@ function PhoneFrame({ children, screen }) {
         width: '100%', height: '100%',
         borderRadius: '45px',
         overflow: 'hidden',
-        background: '#F2F2F7',
+        background: '#080808',
         position: 'relative',
       }}>
         {/* Dynamic Island */}
@@ -122,6 +123,7 @@ export default function App() {
             activeTab="home"
             onTabChange={handleTabChange}
             onScan={() => setScreen('nfc')}
+            onSavingsTap={() => setScreen('savings-tab')}
             selectedCards={selectedCards}
           />
         )}
@@ -131,6 +133,12 @@ export default function App() {
             onTabChange={handleTabChange}
             selectedCards={selectedCards}
             onCardTap={handleCardTap}
+          />
+        )}
+        {screen === 'savings-tab' && (
+          <SavingsScreen
+            activeTab="savings-tab"
+            onTabChange={handleTabChange}
           />
         )}
         {screen === 'settings-tab' && (

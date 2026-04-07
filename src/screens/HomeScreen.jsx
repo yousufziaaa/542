@@ -2,6 +2,8 @@ import StatusBar from '../components/StatusBar';
 import BottomTabBar from '../components/BottomTabBar';
 import { CARDS } from '../data/cards';
 
+const FF = "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif";
+
 function getGreeting() {
   const h = new Date().getHours();
   if (h < 12) return 'Good morning';
@@ -9,13 +11,7 @@ function getGreeting() {
   return 'Good evening';
 }
 
-function getGreetingSub(count) {
-  if (count === 0) return 'Add cards to start earning';
-  if (count === 1) return '1 card ready to earn';
-  return `${count} cards working for you`;
-}
-
-export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCards }) {
+export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCards, onSavingsTap }) {
   const activeCount = selectedCards && selectedCards.size > 0 ? selectedCards.size : 3;
   const topCard = selectedCards && selectedCards.size > 0
     ? CARDS.find(c => selectedCards.has(c.id))
@@ -24,76 +20,96 @@ export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCar
   return (
     <div style={{
       display: 'flex', flexDirection: 'column', height: '100%',
-      background: '#F2F2F7',
-      fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif",
+      background: '#080808', fontFamily: FF,
     }}>
-      <StatusBar />
+      <StatusBar dark />
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 20px 8px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 8px', position: 'relative' }}>
 
-        {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '18px', marginBottom: '26px' }}>
+        {/* Ambient glow */}
+        <div style={{
+          position: 'absolute', top: '-40px', left: '50%', transform: 'translateX(-50%)',
+          width: '280px', height: '280px', borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(77,166,255,0.12) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+
+        {/* Wordmark */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '16px', marginBottom: '32px' }}>
           <div style={{
-            width: '34px', height: '34px', borderRadius: '10px',
-            background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, boxShadow: '0 3px 10px rgba(0,122,255,0.35)',
+            width: '28px', height: '28px', borderRadius: '8px',
+            background: 'linear-gradient(135deg, #4DA6FF 0%, #6B5CE7 100%)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
           }}>
-            <svg width="19" height="17" viewBox="0 0 19 17" fill="none">
+            <svg width="15" height="13" viewBox="0 0 19 17" fill="none">
               <rect x="1" y="3.5" width="17" height="11" rx="2.5" stroke="white" strokeWidth="1.6"/>
               <path d="M1 7.5h17" stroke="white" strokeWidth="1.6"/>
               <rect x="3.5" y="10" width="4" height="1.8" rx="0.9" fill="white"/>
-              <rect x="3.5" y="12.4" width="2.6" height="1.4" rx="0.7" fill="white" fillOpacity="0.55"/>
             </svg>
           </div>
-          <span style={{ fontSize: '18px', fontWeight: '700', color: '#1C1C1E', letterSpacing: '-0.4px' }}>
+          <span style={{ fontSize: '13px', fontWeight: '600', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
             CardSmart
           </span>
         </div>
 
         {/* Greeting */}
-        <div style={{ marginBottom: '18px' }} className="anim-fade-up">
-          <h1 style={{ fontSize: '30px', fontWeight: '800', color: '#1C1C1E', margin: '0 0 5px', letterSpacing: '-0.6px', lineHeight: 1.15, textWrap: 'balance' }}>
+        <div style={{ marginBottom: '8px' }} className="anim-fade-up">
+          <h1 style={{
+            fontSize: '38px', fontWeight: '800', color: '#FFFFFF',
+            margin: '0 0 6px', letterSpacing: '-1px', lineHeight: 1.08,
+          }}>
             {getGreeting()}
           </h1>
-          <p style={{ fontSize: '15px', color: '#8E8E93', margin: 0, fontWeight: '400' }}>
-            {getGreetingSub(activeCount)}
+          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.45)', margin: 0 }}>
+            {activeCount} {activeCount === 1 ? 'card' : 'cards'} working for you
           </p>
         </div>
 
-        {/* Savings chip */}
-        <div style={{
-          display: 'inline-flex', alignItems: 'center', gap: '7px',
-          background: 'rgba(52,199,89,0.12)',
-          border: '1px solid rgba(52,199,89,0.2)',
-          borderRadius: '22px', padding: '7px 14px', marginBottom: '28px',
-        }} className="anim-fade-up">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-            <path d="M22 7l-8.5 8.5-5-5L2 17" stroke="#248A3D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M16 7h6v6" stroke="#248A3D" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+        {/* Savings chip — tappable */}
+        <button
+          onClick={onSavingsTap}
+          className="btn-press anim-fade-up"
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '7px',
+            border: '1px solid rgba(52,208,88,0.35)',
+            background: 'rgba(52,208,88,0.08)',
+            borderRadius: '100px', padding: '6px 14px 6px 12px', marginBottom: '36px',
+            marginTop: '16px', cursor: 'pointer',
+            WebkitTapHighlightColor: 'transparent',
+            fontFamily: FF,
+          }}
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M22 7l-8.5 8.5-5-5L2 17" stroke="#34D058" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-          <span style={{ fontSize: '13px', fontWeight: '600', color: '#248A3D', fontVariantNumeric: 'tabular-nums' }}>
+          <span style={{ fontSize: '13px', fontWeight: '600', color: '#34D058', fontVariantNumeric: 'tabular-nums' }}>
             ~$12.40 saved this month
           </span>
-        </div>
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style={{ opacity: 0.5 }}>
+            <path d="M6 3l5 5-5 5" stroke="#34D058" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
 
         {/* Recent Activity */}
         <div className="anim-fade-up">
           <p style={{
-            fontSize: '11px', fontWeight: '700', color: '#8E8E93',
-            letterSpacing: '0.09em', textTransform: 'uppercase', margin: '0 0 10px 2px',
+            fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.3)',
+            letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 12px',
           }}>
             Recent Activity
           </p>
 
-          <div style={{ background: 'white', borderRadius: '18px', padding: '16px', boxShadow: '0 2px 14px rgba(0,0,0,0.07)' }}>
-            {/* Transaction row */}
+          <div style={{
+            background: '#141414', borderRadius: '20px',
+            border: '1px solid rgba(255,255,255,0.08)',
+            padding: '16px',
+          }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
               <div style={{
                 width: '48px', height: '48px', borderRadius: '14px',
                 background: 'linear-gradient(145deg, #00704A 0%, #00A862 100%)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0, boxShadow: '0 3px 10px rgba(0,112,74,0.3)',
+                flexShrink: 0,
               }}>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                   <path d="M17 8h1a4 4 0 010 8h-1" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
@@ -101,28 +117,28 @@ export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCar
                   <path d="M6 2v3M10 2v3M14 2v3" stroke="white" strokeWidth="1.6" strokeLinecap="round"/>
                 </svg>
               </div>
-
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p style={{ fontSize: '15px', fontWeight: '600', color: '#1C1C1E', margin: 0 }}>Starbucks</p>
-                <p style={{ fontSize: '13px', color: '#8E8E93', margin: '2px 0 0' }}>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: '15px', fontWeight: '600', color: '#FFFFFF', margin: 0 }}>Starbucks</p>
+                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: '3px 0 0' }}>
                   {topCard ? topCard.name : 'Amex Cobalt'} · 5× points
                 </p>
               </div>
-
-              <div style={{ background: 'rgba(0,122,255,0.1)', borderRadius: '9px', padding: '5px 10px', flexShrink: 0 }}>
-                <span style={{ fontSize: '14px', fontWeight: '700', color: '#007AFF' }}>5×</span>
+              <div style={{
+                background: 'rgba(77,166,255,0.15)', borderRadius: '9px', padding: '5px 10px',
+              }}>
+                <span style={{ fontSize: '14px', fontWeight: '700', color: '#4DA6FF' }}>5×</span>
               </div>
             </div>
 
             <div style={{
               marginTop: '14px', paddingTop: '14px',
-              borderTop: '0.5px solid #F2F2F7',
+              borderTop: '0.5px solid rgba(255,255,255,0.07)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
-              <span style={{ fontSize: '12px', color: '#C7C7CC' }}>Today at 9:41 AM</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#34C759' }}/>
-                <span style={{ fontSize: '12px', color: '#34C759', fontWeight: '500' }}>Best card used</span>
+              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>Today at 9:41 AM</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#34D058' }}/>
+                <span style={{ fontSize: '12px', color: '#34D058', fontWeight: '500' }}>Best card used</span>
               </div>
             </div>
           </div>
@@ -131,20 +147,18 @@ export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCar
         {/* Smart tip */}
         {topCard && (
           <div className="anim-fade-up" style={{
-            marginTop: '14px',
-            background: `linear-gradient(135deg, ${topCard.grad[0]}18, ${topCard.grad[1]}22)`,
-            border: `1px solid ${topCard.grad[1]}30`,
+            marginTop: '12px', animationDelay: '80ms',
+            background: '#141414',
+            border: '1px solid rgba(255,255,255,0.08)',
             borderRadius: '14px', padding: '12px 14px',
-            display: 'flex', alignItems: 'center', gap: '10px',
-            animationDelay: '80ms',
+            display: 'flex', alignItems: 'center', gap: '12px',
           }}>
             <div style={{
-              width: '32px', height: '20px', borderRadius: '5px', flexShrink: 0,
+              width: '34px', height: '22px', borderRadius: '6px', flexShrink: 0,
               background: `linear-gradient(135deg, ${topCard.grad[0]}, ${topCard.grad[1]})`,
-              boxShadow: `0 2px 6px ${topCard.grad[1]}44`,
             }} />
-            <p style={{ margin: 0, fontSize: '12px', color: '#3C3C43', lineHeight: 1.4 }}>
-              <strong style={{ color: '#1C1C1E' }}>{topCard.name}</strong>
+            <p style={{ margin: 0, fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.4 }}>
+              <span style={{ color: '#FFFFFF', fontWeight: '500' }}>{topCard.name}</span>
               {topCard.rates && topCard.rates[0] && (
                 <> earns {topCard.rates[0].rate} on {topCard.rates[0].label.toLowerCase()}</>
               )}
@@ -153,27 +167,26 @@ export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCar
         )}
       </div>
 
-      {/* Bottom CTA + Tab bar */}
-      <div style={{ background: 'white', borderTop: '0.5px solid rgba(0,0,0,0.08)', flexShrink: 0 }}>
-        <div style={{ padding: '16px 20px 10px' }}>
+      {/* Bottom CTA */}
+      <div style={{ background: '#080808', borderTop: '0.5px solid rgba(255,255,255,0.06)', flexShrink: 0 }}>
+        <div style={{ padding: '16px 24px 10px' }}>
           <button
             onClick={onScan}
             className="btn-press"
             style={{
               width: '100%', height: '58px',
-              background: 'linear-gradient(135deg, #007AFF 0%, #0060CC 100%)',
-              border: 'none', borderRadius: '17px',
-              color: 'white', fontSize: '17px', fontWeight: '600',
+              background: 'rgba(255,255,255,0.92)',
+              border: 'none', borderRadius: '100px',
+              color: '#080808', fontSize: '16px', fontWeight: '700',
               cursor: 'pointer', letterSpacing: '-0.2px',
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-              boxShadow: '0 5px 22px rgba(0,122,255,0.42)',
-              WebkitTapHighlightColor: 'transparent',
+              fontFamily: FF,
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-              <path d="M5 12.5a7 7 0 017-7 7 7 0 017 7" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M8 12.5a4 4 0 014-4 4 4 0 014 4" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-              <circle cx="12" cy="12.5" r="1.8" fill="white"/>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12.5a7 7 0 017-7 7 7 0 017 7" stroke="#080808" strokeWidth="2.2" strokeLinecap="round"/>
+              <path d="M8 12.5a4 4 0 014-4 4 4 0 014 4" stroke="#080808" strokeWidth="2.2" strokeLinecap="round"/>
+              <circle cx="12" cy="12.5" r="1.8" fill="#080808"/>
             </svg>
             Scan Merchant
           </button>
