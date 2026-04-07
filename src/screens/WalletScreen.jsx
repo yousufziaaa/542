@@ -26,17 +26,15 @@ function RecommendedCard({ card }) {
   return (
     <div style={{ position: 'relative', marginTop: '24px' }}>
       <div style={{
-        position: 'absolute', top: '-15px', left: '50%',
+        position: 'absolute', top: '-13px', left: '50%',
         transform: 'translateX(-50%)',
-        background: 'linear-gradient(135deg, #C9960C, #F5C842)',
-        borderRadius: '16px', padding: '4px 12px 4px 9px',
-        display: 'flex', alignItems: 'center', gap: '4px',
+        background: 'rgba(255,255,255,0.1)',
+        border: '1px solid rgba(255,255,255,0.15)',
+        borderRadius: '100px', padding: '4px 12px',
         whiteSpace: 'nowrap', zIndex: 10,
-        boxShadow: '0 3px 12px rgba(197,150,12,0.42)',
         animation: 'badgePop 0.42s cubic-bezier(0.34,1.56,0.64,1) 0.18s both',
       }}>
-        <span style={{ fontSize: '11px', lineHeight: 1 }}>⭐</span>
-        <span style={{ fontSize: '11px', fontWeight: '700', color: '#5C3800', letterSpacing: '0.02em' }}>Best for this merchant</span>
+        <span style={{ fontSize: '11px', fontWeight: '600', color: 'rgba(255,255,255,0.65)' }}>Best for this merchant</span>
       </div>
 
       <div style={{
@@ -127,7 +125,7 @@ function ConfirmModal({ card, onConfirm, onCancel }) {
           <div style={{ width: '32px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.15)' }} />
         </div>
         <div style={{ padding: '14px 20px 36px' }}>
-          <p style={{ fontSize: '18px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px', textAlign: 'center', letterSpacing: '-0.4px' }}>
+          <p style={{ fontSize: '16px', fontWeight: '600', color: '#FFFFFF', margin: '0 0 18px', textAlign: 'center', letterSpacing: '-0.3px' }}>
             Confirm Payment
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', background: 'rgba(255,255,255,0.06)', borderRadius: '16px', padding: '14px 16px', marginBottom: '20px', border: '1px solid rgba(255,255,255,0.07)' }}>
@@ -220,7 +218,7 @@ export default function WalletScreen({ onContinue, onBack, selectedCards }) {
             <path d="M7 1L1 7L7 13" stroke="rgba(255,255,255,0.8)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <span style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', fontSize: '15px', fontWeight: '700', color: '#FFFFFF', letterSpacing: '-0.2px' }}>Choose Card</span>
+        <span style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', fontSize: '14px', fontWeight: '600', color: 'rgba(255,255,255,0.8)', letterSpacing: '-0.2px' }}>Choose Card</span>
       </div>
 
       {/* Merchant pill */}
@@ -230,8 +228,7 @@ export default function WalletScreen({ onContinue, onBack, selectedCards }) {
           background: '#141414', borderRadius: '100px', padding: '6px 14px',
           border: '1px solid rgba(255,255,255,0.08)',
         }}>
-          <span style={{ fontSize: '12px' }}>☕</span>
-          <span style={{ fontSize: '12px', fontWeight: '600', color: 'rgba(255,255,255,0.7)' }}>Dining &amp; Food</span>
+          <span style={{ fontSize: '12px', fontWeight: '500', color: 'rgba(255,255,255,0.6)' }}>Dining &amp; Food</span>
           <div style={{ width: '1px', height: '10px', background: 'rgba(255,255,255,0.12)' }} />
           <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>{stack.length} cards</span>
         </div>

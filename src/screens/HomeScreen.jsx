@@ -11,6 +11,33 @@ function getGreeting() {
   return 'Good evening';
 }
 
+const RECENT = [
+  { merchant: 'Starbucks',  card: 'Amex Cobalt', rate: '5×', time: '9:41 AM',   best: true,  grad: ['#0E2A6E','#1B5FCC'] },
+  { merchant: 'Loblaws',    card: 'Amex Cobalt', rate: '5×', time: 'Yesterday', best: true,  grad: ['#0E2A6E','#1B5FCC'] },
+  { merchant: 'Netflix',    card: 'Amex Cobalt', rate: '3×', time: 'Mon',       best: false, grad: ['#0E2A6E','#1B5FCC'] },
+];
+
+const BEST_FOR = [
+  { category: 'Dining',     card: 'Amex Cobalt',     rate: '5×', grad: ['#0E2A6E','#1B5FCC'] },
+  { category: 'Groceries',  card: 'Amex Cobalt',     rate: '5×', grad: ['#0E2A6E','#1B5FCC'] },
+  { category: 'Travel',     card: 'TD Aeroplan Visa', rate: '2×', grad: ['#00532A','#008644'] },
+];
+
+function SectionLabel({ children, action, onAction }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '24px 0 8px' }}>
+      <p style={{ fontSize: '11px', fontWeight: '500', color: 'rgba(255,255,255,0.22)', letterSpacing: '0.06em', textTransform: 'uppercase', margin: 0 }}>
+        {children}
+      </p>
+      {action && (
+        <button onClick={onAction} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: FF }}>
+          <span style={{ fontSize: '12px', color: 'rgba(77,166,255,0.7)', fontWeight: '500' }}>{action}</span>
+        </button>
+      )}
+    </div>
+  );
+}
+
 export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCards, onSavingsTap }) {
   const activeCount = selectedCards && selectedCards.size > 0 ? selectedCards.size : 3;
   const topCard = selectedCards && selectedCards.size > 0
@@ -18,153 +45,112 @@ export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCar
     : CARDS[0];
 
   return (
-    <div style={{
-      display: 'flex', flexDirection: 'column', height: '100%',
-      background: '#080808', fontFamily: FF,
-    }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: '#080808', fontFamily: FF }}>
       <StatusBar dark />
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 8px', position: 'relative' }}>
-
-        {/* Ambient glow */}
-        <div style={{
-          position: 'absolute', top: '-40px', left: '50%', transform: 'translateX(-50%)',
-          width: '280px', height: '280px', borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(77,166,255,0.12) 0%, transparent 70%)',
-          pointerEvents: 'none',
-        }} />
-
-        {/* Wordmark */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '16px', marginBottom: '32px' }}>
-          <div style={{
-            width: '28px', height: '28px', borderRadius: '8px',
-            background: 'linear-gradient(135deg, #4DA6FF 0%, #6B5CE7 100%)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-          }}>
-            <svg width="15" height="13" viewBox="0 0 19 17" fill="none">
-              <rect x="1" y="3.5" width="17" height="11" rx="2.5" stroke="white" strokeWidth="1.6"/>
-              <path d="M1 7.5h17" stroke="white" strokeWidth="1.6"/>
-              <rect x="3.5" y="10" width="4" height="1.8" rx="0.9" fill="white"/>
-            </svg>
-          </div>
-          <span style={{ fontSize: '13px', fontWeight: '600', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-            CardSmart
-          </span>
-        </div>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 8px' }}>
 
         {/* Greeting */}
-        <div style={{ marginBottom: '8px' }} className="anim-fade-up">
-          <h1 style={{
-            fontSize: '38px', fontWeight: '800', color: '#FFFFFF',
-            margin: '0 0 6px', letterSpacing: '-1px', lineHeight: 1.08,
-          }}>
+        <div style={{ marginTop: '20px' }} className="anim-fade-up">
+          <h1 style={{ fontSize: '32px', fontWeight: '700', color: '#FFFFFF', margin: '0 0 4px', letterSpacing: '-0.7px', lineHeight: 1.1 }}>
             {getGreeting()}
           </h1>
-          <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.45)', margin: 0 }}>
+          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.3)', margin: 0 }}>
             {activeCount} {activeCount === 1 ? 'card' : 'cards'} working for you
           </p>
         </div>
 
-        {/* Savings chip — tappable */}
+        {/* Monthly summary — tappable */}
         <button
           onClick={onSavingsTap}
           className="btn-press anim-fade-up"
           style={{
-            display: 'inline-flex', alignItems: 'center', gap: '7px',
-            border: '1px solid rgba(52,208,88,0.35)',
-            background: 'rgba(52,208,88,0.08)',
-            borderRadius: '100px', padding: '6px 14px 6px 12px', marginBottom: '36px',
-            marginTop: '16px', cursor: 'pointer',
-            WebkitTapHighlightColor: 'transparent',
-            fontFamily: FF,
+            width: '100%', background: 'none', border: 'none', padding: 0,
+            cursor: 'pointer', fontFamily: FF, textAlign: 'left',
+            WebkitTapHighlightColor: 'transparent', marginTop: '20px',
           }}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-            <path d="M22 7l-8.5 8.5-5-5L2 17" stroke="#34D058" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          <span style={{ fontSize: '13px', fontWeight: '600', color: '#34D058', fontVariantNumeric: 'tabular-nums' }}>
-            ~$12.40 saved this month
-          </span>
-          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style={{ opacity: 0.5 }}>
-            <path d="M6 3l5 5-5 5" stroke="#34D058" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <div style={{
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            borderRadius: '16px', padding: '14px 16px',
+            display: 'flex', alignItems: 'center',
+          }}>
+            {[
+              { label: 'Saved',        value: '$12.40', color: '#34D058' },
+              { label: 'Transactions', value: '6',      color: '#FFFFFF' },
+            ].map((stat, i) => (
+              <div key={stat.label} style={{
+                flex: 1, textAlign: 'center',
+                borderRight: i < 1 ? '0.5px solid rgba(255,255,255,0.08)' : 'none',
+              }}>
+                <p style={{ fontSize: '17px', fontWeight: '600', color: stat.color, margin: '0 0 3px', letterSpacing: '-0.3px', fontVariantNumeric: 'tabular-nums' }}>{stat.value}</p>
+                <p style={{ fontSize: '10px', color: 'rgba(255,255,255,0.22)', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>{stat.label}</p>
+              </div>
+            ))}
+            <div style={{ paddingLeft: '12px', flexShrink: 0 }}>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M4.5 2.5l3 3.5-3 3.5" stroke="rgba(255,255,255,0.2)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
         </button>
 
         {/* Recent Activity */}
-        <div className="anim-fade-up">
-          <p style={{
-            fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.3)',
-            letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 12px',
-          }}>
-            Recent Activity
-          </p>
-
-          <div style={{
-            background: '#141414', borderRadius: '20px',
-            border: '1px solid rgba(255,255,255,0.08)',
-            padding: '16px',
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div style={{
-                width: '48px', height: '48px', borderRadius: '14px',
-                background: 'linear-gradient(145deg, #00704A 0%, #00A862 100%)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                flexShrink: 0,
-              }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                  <path d="M17 8h1a4 4 0 010 8h-1" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4V8z" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M6 2v3M10 2v3M14 2v3" stroke="white" strokeWidth="1.6" strokeLinecap="round"/>
-                </svg>
+        <SectionLabel action="See all" onAction={onSavingsTap}>Recent Activity</SectionLabel>
+        <div>
+          {RECENT.map((tx, i) => (
+            <div key={tx.merchant + i} style={{ position: 'relative' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '11px 0' }}>
+                <div style={{
+                  width: '40px', height: '26px', borderRadius: '5px', flexShrink: 0,
+                  background: `linear-gradient(135deg, ${tx.grad[0]}, ${tx.grad[1]})`,
+                  position: 'relative', overflow: 'hidden',
+                }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, rgba(255,255,255,0.15) 0%, transparent 55%)' }} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontSize: '14px', fontWeight: '500', color: '#FFFFFF', margin: 0 }}>{tx.merchant}</p>
+                  <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', margin: '2px 0 0' }}>
+                    {tx.card} · <span style={{ color: 'rgba(77,166,255,0.8)' }}>{tx.rate}</span>
+                  </p>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.2)', margin: 0 }}>{tx.time}</p>
+                  {tx.best && (
+                    <p style={{ fontSize: '11px', color: 'rgba(52,208,88,0.7)', margin: '2px 0 0', fontWeight: '500' }}>Best card</p>
+                  )}
+                </div>
               </div>
-              <div style={{ flex: 1 }}>
-                <p style={{ fontSize: '15px', fontWeight: '600', color: '#FFFFFF', margin: 0 }}>Starbucks</p>
-                <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', margin: '3px 0 0' }}>
-                  {topCard ? topCard.name : 'Amex Cobalt'} · 5× points
-                </p>
-              </div>
-              <div style={{
-                background: 'rgba(77,166,255,0.15)', borderRadius: '9px', padding: '5px 10px',
-              }}>
-                <span style={{ fontSize: '14px', fontWeight: '700', color: '#4DA6FF' }}>5×</span>
-              </div>
+              {i < RECENT.length - 1 && <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.05)' }} />}
             </div>
-
-            <div style={{
-              marginTop: '14px', paddingTop: '14px',
-              borderTop: '0.5px solid rgba(255,255,255,0.07)',
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            }}>
-              <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>Today at 9:41 AM</span>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#34D058' }}/>
-                <span style={{ fontSize: '12px', color: '#34D058', fontWeight: '500' }}>Best card used</span>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Smart tip */}
-        {topCard && (
-          <div className="anim-fade-up" style={{
-            marginTop: '12px', animationDelay: '80ms',
-            background: '#141414',
-            border: '1px solid rgba(255,255,255,0.08)',
-            borderRadius: '14px', padding: '12px 14px',
-            display: 'flex', alignItems: 'center', gap: '12px',
-          }}>
-            <div style={{
-              width: '34px', height: '22px', borderRadius: '6px', flexShrink: 0,
-              background: `linear-gradient(135deg, ${topCard.grad[0]}, ${topCard.grad[1]})`,
-            }} />
-            <p style={{ margin: 0, fontSize: '13px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.4 }}>
-              <span style={{ color: '#FFFFFF', fontWeight: '500' }}>{topCard.name}</span>
-              {topCard.rates && topCard.rates[0] && (
-                <> earns {topCard.rates[0].rate} on {topCard.rates[0].label.toLowerCase()}</>
-              )}
-            </p>
-          </div>
-        )}
+        {/* Best for */}
+        <SectionLabel>Best card for</SectionLabel>
+        <div>
+          {BEST_FOR.map((item, i) => (
+            <div key={item.category} style={{ position: 'relative' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '11px 0' }}>
+                <div style={{
+                  width: '40px', height: '26px', borderRadius: '5px', flexShrink: 0,
+                  background: `linear-gradient(135deg, ${item.grad[0]}, ${item.grad[1]})`,
+                  position: 'relative', overflow: 'hidden',
+                }}>
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(145deg, rgba(255,255,255,0.15) 0%, transparent 55%)' }} />
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <p style={{ fontSize: '14px', fontWeight: '500', color: '#FFFFFF', margin: 0 }}>{item.category}</p>
+                  <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.3)', margin: '2px 0 0' }}>{item.card}</p>
+                </div>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: 'rgba(77,166,255,0.8)', flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>{item.rate}</span>
+              </div>
+              {i < BEST_FOR.length - 1 && <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.05)' }} />}
+            </div>
+          ))}
+        </div>
+
       </div>
 
       {/* Bottom CTA */}
@@ -174,16 +160,16 @@ export default function HomeScreen({ onScan, onTabChange, activeTab, selectedCar
             onClick={onScan}
             className="btn-press"
             style={{
-              width: '100%', height: '58px',
+              width: '100%', height: '54px',
               background: 'rgba(255,255,255,0.92)',
               border: 'none', borderRadius: '100px',
-              color: '#080808', fontSize: '16px', fontWeight: '700',
+              color: '#080808', fontSize: '15px', fontWeight: '700',
               cursor: 'pointer', letterSpacing: '-0.2px',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '9px',
               fontFamily: FF,
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
               <path d="M5 12.5a7 7 0 017-7 7 7 0 017 7" stroke="#080808" strokeWidth="2.2" strokeLinecap="round"/>
               <path d="M8 12.5a4 4 0 014-4 4 4 0 014 4" stroke="#080808" strokeWidth="2.2" strokeLinecap="round"/>
               <circle cx="12" cy="12.5" r="1.8" fill="#080808"/>

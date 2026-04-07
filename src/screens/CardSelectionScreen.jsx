@@ -36,18 +36,15 @@ export default function CardSelectionScreen({ onContinue }) {
               <path d="M0.75 5.5h11.5" stroke="white" strokeWidth="1.3" />
             </svg>
           </div>
-          <span style={{ fontSize: '10px', fontWeight: '700', color: 'rgba(255,255,255,0.35)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '10px', fontWeight: '600', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             CardSmart
           </span>
         </div>
 
-        <h1 style={{
-          fontSize: '34px', fontWeight: '800', color: '#FFFFFF',
-          lineHeight: 1.1, margin: '0 0 10px', letterSpacing: '-0.8px',
-        }}>
-          Which cards are{'\n'}in your wallet?
+        <h1 style={{ fontSize: '26px', fontWeight: '600', color: '#FFFFFF', lineHeight: 1.15, margin: '0 0 8px', letterSpacing: '-0.5px' }}>
+          Which cards are in your wallet?
         </h1>
-        <p style={{ fontSize: '15px', color: 'rgba(255,255,255,0.4)', margin: '0 0 8px', lineHeight: 1.4 }}>
+        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.35)', margin: '0 0 8px', lineHeight: 1.4 }}>
           Pick at least 2 — we'll rank them for every purchase.
         </p>
       </div>

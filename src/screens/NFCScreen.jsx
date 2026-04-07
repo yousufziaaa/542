@@ -231,8 +231,8 @@ export default function NFCScreen({ onContinue }) {
               </div>
 
               <h2 style={{
-                fontSize: '20px', fontWeight: '800', color: '#FFFFFF',
-                margin: '0 0 8px', letterSpacing: '-0.4px',
+                fontSize: '18px', fontWeight: '600', color: '#FFFFFF',
+                margin: '0 0 8px', letterSpacing: '-0.3px',
               }}>
                 Merchant Not Detected
               </h2>
@@ -293,7 +293,7 @@ export default function NFCScreen({ onContinue }) {
                   boxShadow: '0 0 0 3px rgba(52,208,88,0.18)',
                   animation: 'glowPulse 1.8s ease-in-out infinite',
                 }} />
-                <span style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '11px', fontWeight: '500', color: 'rgba(255,255,255,0.22)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                   Best Card for This Merchant
                 </span>
               </div>
@@ -303,17 +303,18 @@ export default function NFCScreen({ onContinue }) {
                   <SheetCard />
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <p style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0, lineHeight: 1.15, letterSpacing: '-0.4px' }}>
+                  <p style={{ fontSize: '18px', fontWeight: '600', color: '#FFFFFF', margin: 0, lineHeight: 1.15, letterSpacing: '-0.3px' }}>
                     {CARD.name}
                   </p>
                   <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)', margin: '2px 0 0' }}>{CARD.bank}</p>
                   <div style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '7px',
-                    background: 'linear-gradient(135deg, #0E2A6E, #1B5FCC)',
-                    borderRadius: '100px', padding: '4px 10px',
+                    display: 'inline-flex', alignItems: 'center', gap: '5px', marginTop: '6px',
+                    background: 'rgba(255,255,255,0.07)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    borderRadius: '100px', padding: '3px 10px',
                   }}>
-                    <span style={{ fontSize: '13px', fontWeight: '800', color: 'white' }}>{CARD.reward}</span>
-                    <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.75)', fontWeight: '500' }}>{CARD.category}</span>
+                    <span style={{ fontSize: '12px', fontWeight: '700', color: 'rgba(77,166,255,0.85)' }}>{CARD.reward}</span>
+                    <span style={{ fontSize: '12px', color: 'rgba(255,255,255,0.5)', fontWeight: '400' }}>{CARD.category}</span>
                   </div>
                 </div>
               </div>
